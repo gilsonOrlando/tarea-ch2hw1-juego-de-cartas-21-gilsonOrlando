@@ -1,0 +1,30 @@
+name: "sonar_cloud_scan_github_actions"
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+            fetch-depth: 0
+
+      # Step to set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKENG }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=gilsonorlando
+            -Dsonar.projectKey=gilsonOrlando_tableroB
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.java.coverage.reportPaths=coverage.xml
