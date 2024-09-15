@@ -1,26 +1,35 @@
-name: Build
+name: "sonar_cloud_scan_github_actions"
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  DemoSonarCloudScan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Aquí se hace el cambio al directorio donde está el pom.xml, si está en una subcarpeta
+      - name: Build with Maven
+        run: |
+          cd path/to/your/project  # Cambia 'path/to/your/project' por la ruta real donde está el pom.xml
+          mvn clean install
+
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKENG }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.TOKENG }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
             -Dsonar.organization=gilsonorlando
-            -Dsonar.projectKey=tableronuevo
+            -Dsonar.projectKey=gilsonOrlando_tableroB
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.coverage.reportPaths=coverage.xml
