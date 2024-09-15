@@ -32,5 +32,3 @@ jobs:
           args: >
             -Dsonar.organization=gilsonorlando
             -Dsonar.projectKey=nuevotablero
-            -Dsonar.java.binaries=target/classes  # Aquí se especifican los binarios generados por Maven
-            -Dsonar.java.coverage.reportPaths=coverage.xml
