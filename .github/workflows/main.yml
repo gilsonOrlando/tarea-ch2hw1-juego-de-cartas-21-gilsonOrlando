@@ -10,11 +10,12 @@ jobs:
         with:
             fetch-depth: 0
 
-      # Step to compile the code
+      # Step to set up JDK
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+          distribution: 'temurin'  # Puedes cambiar 'temurin' por la distribución que prefieras (temurin es recomendado)
 
       - name: Build with Maven
         run: mvn clean install
