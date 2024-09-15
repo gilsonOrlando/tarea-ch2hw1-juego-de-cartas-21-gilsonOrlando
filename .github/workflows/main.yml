@@ -1,29 +1,22 @@
-name: "sonar_cloud_scan_github_actions"
+name: Build
 on:
-  workflow_dispatch:
-
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  DemoSonarCloudScan:
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-            fetch-depth: 0
-
-      # Step to set up JDK
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'  # Puedes cambiar 'temurin' por la distribución que prefieras (temurin es recomendado)
-
-      - name: Build with Maven
-        run: mvn clean install
-
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKENG }}
+          GITHUB_TOKEN: ${{ secrets.TOKENG }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
