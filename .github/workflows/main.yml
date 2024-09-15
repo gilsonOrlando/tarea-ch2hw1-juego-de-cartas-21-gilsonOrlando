@@ -17,6 +17,6 @@ jobs:
         with:
           args: >
             -Dsonar.organization=gilsonorlando
-            -Dsonar.projectKey=tableroB
+            -Dsonar.projectKey=gilsonOrlando_tableroB
             -Dsonar.java.coverage.reportPaths=coverage.xml
           
