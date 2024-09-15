@@ -3,12 +3,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  DemoSonarCloudSCan:
+  DemoSonarCloudScan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
             fetch-depth: 0
+
+      # Step to compile the code
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean install
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -18,5 +28,5 @@ jobs:
           args: >
             -Dsonar.organization=gilsonorlando
             -Dsonar.projectKey=gilsonOrlando_tableroB
+            -Dsonar.java.binaries=target/classes
             -Dsonar.java.coverage.reportPaths=coverage.xml
-          
