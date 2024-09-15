@@ -6,7 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
             fetch-depth: 0
 
@@ -25,6 +26,5 @@ jobs:
         with:
           args: >
             -Dsonar.organization=gilsonorlando
-            -Dsonar.projectKey=gilsonOrlando_tableroB
-            -Dsonar.java.binaries=target/classes
+            -Dsonar.projectKey=nuevotablero
             -Dsonar.java.coverage.reportPaths=coverage.xml
